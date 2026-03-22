@@ -2,179 +2,204 @@
 
 <div align="center">
 
-![GoldTrack Pro Banner](https://img.shields.io/badge/GoldTrack-Pro-F59E0B?style=for-the-badge&logo=data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCI+PHBhdGggZmlsbD0iI0Y1OUUwQiIgZD0iTTEyIDJMMiA3bDEwIDUgMTAtNUwxMiAyeE0yIDE3bDEwIDUgMTAtNVYybC0xMCA1TDIgMTJ2NXoiLz48L3N2Zz4=&labelColor=0f0f0f)
-
+![GoldTrack Pro](https://img.shields.io/badge/GoldTrack-Pro-F59E0B?style=for-the-badge&labelColor=0f0f0f)
 [![Made for Bangladesh](https://img.shields.io/badge/Made%20for-Bangladesh%20🇧🇩-006A4E?style=flat-square)](https://github.com)
 [![No Install Required](https://img.shields.io/badge/No%20Install-Required-10B981?style=flat-square)](#)
-[![Mobile Friendly](https://img.shields.io/badge/Mobile-Friendly-3B82F6?style=flat-square)](#)
+[![Mobile Friendly](https://img.shields.io/badge/Mobile-Friendly-3B82F6?style=flat-square)](#getting-started)
 [![Free API](https://img.shields.io/badge/API-Free%20Tier-F59E0B?style=flat-square)](https://goldapi.io)
 [![License: MIT](https://img.shields.io/badge/License-MIT-94A3B8?style=flat-square)](LICENSE)
 
-**সোনা ও রূপার ব্যবসায়ীদের জন্য Real-Time মূল্য ট্র্যাকার ও AI ভিত্তিক Buy/Sell সিগ্নাল ড্যাশবোর্ড**
+**A Real-Time Gold & Silver Price Tracker with AI-Powered Buy/Sell Signals — built for traders in Bangladesh.**
 
-[🚀 Live Demo](#getting-started) · [📖 বাংলা গাইড](#বাংলা-গাইড) · [🔑 API Key নাও](https://goldapi.io) · [🐛 Bug Report](../../issues)
+[🚀 Getting Started](#getting-started) · [🔑 Get Free API Key](https://goldapi.io) · [🧠 How AI Works](#-how-the-ai-prediction-works) · [🐛 Report a Bug](../../issues)
 
 </div>
 
 ---
 
-## 📌 এটা কী এবং কেন বানানো হয়েছে?
+## 📌 What is GoldTrack Pro?
 
-**GoldTrack Pro** হলো বাংলাদেশের সোনা-রূপার ব্যবসায়ীদের জন্য তৈরি একটি ফ্রি, ওপেন-সোর্স ওয়েব ড্যাশবোর্ড। আন্তর্জাতিক বাজারে সোনা-রূপার দাম প্রতি মুহূর্তে ওঠানামা করে — এই ওঠানামার সঠিক সময়ে কিনতে বা বেচতে পারলেই লাভ, না পারলেই লোকসান।
+GoldTrack Pro is a free, open-source web dashboard designed specifically for gold and silver traders in Bangladesh. International precious metal prices change every minute — buying or selling at the right moment is the difference between profit and loss.
 
-এই সফটওয়্যার আপনাকে সাহায্য করে:
+This software helps you decide:
 
-- 🟢 **কখন কিনবেন** — BUY সিগ্নাল দেখালে
-- 🔴 **কখন বেচবেন** — SELL সিগ্নাল দেখালে
-- 🟡 **কখন অপেক্ষা করবেন** — HOLD সিগ্নাল দেখালে
+- 🟢 **When to BUY** — when the market signals an upward movement
+- 🔴 **When to SELL** — when the market signals a downward movement
+- 🟡 **When to HOLD** — when signals are mixed or confidence is low
 
-সব মূল্য **BDT (টাকায়)** এবং **প্রতি গ্রাম / প্রতি তোলায়** দেখানো হয় — যা বাংলাদেশের বাজারের সাথে সরাসরি মেলানো যায়।
+All prices are displayed in **BDT (Bangladeshi Taka)** per gram and per tola, making it directly usable for local trading decisions.
 
 ---
 
 ## ✨ Features
 
-| ফিচার | বিবরণ |
+| Feature | Description |
 |---|---|
-| 🟢🔴🟡 **BUY / SELL / HOLD Signal** | AI বিশ্লেষণে তৈরি সবচেয়ে গুরুত্বপূর্ণ সিদ্ধান্ত সংকেত |
-| 💰 **Real-Time Price (BDT)** | প্রতি গ্রাম ও প্রতি তোলায় বাংলাদেশী টাকায় সোনা ও রূপার দাম |
-| 💱 **Live USD → BDT Rate** | স্বয়ংক্রিয়ভাবে আপডেট হওয়া ডলার রেট |
-| 🧠 **AI Prediction Engine** | RSI + SMA + ROC ব্যবহার করে পরবর্তী দাম উঠবে নাকি নামবে তার পূর্বাভাস |
-| 📊 **Price History Chart** | ঐতিহাসিক দামের লাইন চার্ট (সোনা ও রূপা আলাদাভাবে) |
-| ⏱️ **Auto Refresh** | প্রতি ৬০ সেকেন্ডে স্বয়ংক্রিয় আপডেট + countdown timer |
-| 📱 **Mobile + PC** | যেকোনো ডিভাইসে সুন্দরভাবে কাজ করে |
-| 🌙 **Dark Mode UI** | চোখের জন্য আরামদায়ক গাঢ় থিম |
-| 📈 **Market High/Low** | দৈনিক সর্বোচ্চ ও সর্বনিম্ন দাম BDT/গ্রামে |
-| 🟢 **Market Open/Close Status** | বৈশ্বিক স্বর্ণ বাজার খোলা না বন্ধ তার স্ট্যাটাস |
+| 🟢🔴🟡 **BUY / SELL / HOLD Signal** | The most prominent element — AI-generated trading signal at a glance |
+| 💰 **Real-Time Price in BDT** | Live gold & silver prices in Bangladeshi Taka per gram and per tola |
+| 💱 **Live USD → BDT Rate** | Automatically fetched and updated currency conversion rate |
+| 🧠 **AI Prediction Engine** | Uses RSI + SMA + ROC to forecast whether the next price move will go UP or DOWN |
+| 📊 **Price History Chart** | Interactive line chart for Gold and Silver price trends over time |
+| ⏱️ **Auto Refresh Every 60s** | Prices update automatically with a visible countdown timer |
+| 📱 **Mobile + Desktop Ready** | Fully responsive — works beautifully on any screen size |
+| 🌙 **Dark Mode UI** | Eye-friendly dark theme with gold and silver accent colors |
+| 📈 **Daily High / Low** | Today's highest and lowest prices shown in BDT per gram |
+| 🟢 **Market Open/Close Status** | Real-time global gold market session status based on UTC hours |
 
 ---
 
-## 🖥️ Screenshots
+## 🖥️ Preview
 
 ```
-┌─────────────────────────────────────────────────────┐
-│  🪙 GoldTrack Pro                    🟢 LIVE  20:45 │
-├─────────────────────────────────────────────────────┤
-│  🟢 খোলা  |  USD→BDT: ৳১১০  |  High: ৳১২,৪৫০     │
-├───────────────────┬─────────────────────────────────┤
-│  🥇 GOLD          │  🥈 SILVER                      │
-│  🟢 BUY           │  🟡 HOLD                        │
-│  HIGH CONFIDENCE  │  LOW CONFIDENCE                 │
-├───────────────────┼─────────────────────────────────┤
-│  GOLD             │  SILVER                         │
-│  ৳ ১১,৮৪৫        │  ৳ ১৩৮                          │
-│  BDT প্রতি গ্রাম  │  BDT প্রতি গ্রাম                │
-│  তোলা: ৳১,৩৮,১৫০ │  তোলা: ৳ ১,৬১০                 │
-├───────────────────┴─────────────────────────────────┤
-│  🧠 AI Prediction │ RSI: 42.3 | SMA: Bullish        │
-│  📈 UP LIKELY     │ Momentum: +0.21%                │
-└─────────────────────────────────────────────────────┘
+┌──────────────────────────────────────────────────────────┐
+│  🪙 GoldTrack Pro                         🟢 LIVE  20:45 │
+├──────────────────────────────────────────────────────────┤
+│  🟢 Open  │  USD→BDT: ৳110.50  │  Gold High: ৳12,450/g  │
+├─────────────────────┬────────────────────────────────────┤
+│  🥇 GOLD            │  🥈 SILVER                         │
+│  🟢  BUY            │  🟡  HOLD                          │
+│  HIGH CONFIDENCE    │  LOW CONFIDENCE                    │
+├─────────────────────┼────────────────────────────────────┤
+│  ৳ 11,845 /gram     │  ৳ 138 /gram                       │
+│  Per Tola: ৳1,38,100│  Per Tola: ৳ 1,610                 │
+│  USD/oz:  $3,290.00 │  USD/oz:  $38.42                   │
+├─────────────────────┴────────────────────────────────────┤
+│  🧠 AI Prediction — Gold                                  │
+│  📈 PRICE LIKELY TO GO UP                                 │
+│  RSI: 42.3 · SMA: Bullish (SMA3 > SMA7) · ROC: +0.21%   │
+└──────────────────────────────────────────────────────────┘
 ```
 
 ---
 
 ## 🚀 Getting Started
 
-### ধাপ ১ — ফাইল Download করুন
+### Step 1 — Download the File
 
 ```bash
-# GitHub থেকে clone করুন
+# Clone the repository
 git clone https://github.com/YOUR_USERNAME/goldtrack-pro.git
 
-# অথবা সরাসরি GoldTrack-Pro.html ফাইলটা Download করুন
+# Or simply download GoldTrack-Pro.html directly from this repository
 ```
 
-### ধাপ ২ — API Key সংগ্রহ করুন (ফ্রি, ৫ মিনিট)
+### Step 2 — Get Your Free API Key (5 minutes)
 
-> **GoldAPI.io** একটি বিশ্বস্ত Real-Time gold/silver price API। Free tier এ প্রতি মাসে ১০০ টি request পাওয়া যায়।
+GoldTrack Pro uses **GoldAPI.io** to fetch real-time gold and silver prices. The free tier provides 100 requests per month at no cost.
 
-1. 👉 [**goldapi.io**](https://goldapi.io) এ যান
-2. **"Sign Up"** বাটনে ক্লিক করুন
-3. Email দিয়ে একটি ফ্রি অ্যাকাউন্ট তৈরি করুন
-4. Dashboard এ লগইন করলে আপনার **API Key** দেখতে পাবেন
-5. Key টা copy করুন — এরকম দেখতে হবে: `goldapi-xxxxxxxxxxxxxxxxxx`
+1. Go to 👉 [**goldapi.io**](https://goldapi.io)
+2. Click **"Sign Up"** and create a free account
+3. After logging in, find your **API Key** on the dashboard
+4. Copy it — it will look like: `goldapi-xxxxxxxxxxxxxxxxxx`
 
-### ধাপ ৩ — App চালু করুন
+### Step 3 — Open the App
 
 ```
-1. GoldTrack-Pro.html ফাইলটা যেকোনো Browser এ Open করুন
-   (Chrome / Firefox / Edge — সব কাজ করবে)
+1. Open GoldTrack-Pro.html in any modern browser
+   (Chrome, Firefox, Edge — all supported)
 
-2. API Key input box এ আপনার key paste করুন
+2. Paste your API Key into the input box shown on screen
 
-3. "শুরু করো" বাটনে ক্লিক করুন
+3. Click the Start button
 
-4. ব্যস! Dashboard লোড হয়ে যাবে ✅
+4. The dashboard will load with live data ✅
 ```
 
-> **💡 টিপস:** Key একবার দিলে browser এ save হয়ে যাবে। পরবর্তীতে আর দিতে হবে না।
+> 💡 **Tip:** Your API key is saved in the browser automatically. You will not need to enter it again on the same device.
 
-### ধাপ ৪ — Phone এ দেখুন (একই WiFi তে)
+### Step 4 — Access from Your Phone (Same Wi-Fi)
 
+**Option A — Local Network:**
 ```bash
-# PC তে ফাইলটা open করে URL bar থেকে local IP বের করুন
-# অথবা PC তে Command Prompt এ টাইপ করুন:
+# Find your PC's local IP address:
 
-Windows:  ipconfig          → IPv4 Address দেখুন (যেমন: 192.168.1.5)
-Mac/Linux: ifconfig / ip a  → inet address দেখুন
+# Windows — open Command Prompt and run:
+ipconfig
+# Look for "IPv4 Address" (e.g., 192.168.1.5)
 
-# তারপর Phone এর browser এ লিখুন:
-http://192.168.1.5:PORT/GoldTrack-Pro.html
+# Mac / Linux — run:
+ifconfig
+# Look for "inet" address
 
-# অথবা সহজে: ফাইলটা Google Drive / WhatsApp এ নিজেকে পাঠান
-# Phone এ download করে Chrome এ open করুন
+# Then open this URL on your phone's browser:
+http://192.168.1.5/path/to/GoldTrack-Pro.html
+```
+
+**Option B — Simple File Share (Easier):**
+```
+Send GoldTrack-Pro.html to yourself via WhatsApp or Gmail
+→ Download on your phone
+→ Open with Chrome
+→ Done ✅
 ```
 
 ---
 
-## 🧠 AI Prediction কীভাবে কাজ করে?
+## 🧠 How the AI Prediction Works
 
-GoldTrack Pro তিনটি প্রমাণিত Technical Analysis indicator ব্যবহার করে:
+GoldTrack Pro uses three proven technical analysis indicators to generate predictions:
 
-### 1️⃣ RSI — Relative Strength Index
-```
-RSI < 30  → Oversold  → 📈 দাম বাড়ার সম্ভাবনা বেশি (BUY signal)
-RSI > 70  → Overbought → 📉 দাম কমার সম্ভাবনা বেশি (SELL signal)
-30 < RSI < 70 → Normal zone
-```
+### 1. RSI — Relative Strength Index
 
-### 2️⃣ SMA — Simple Moving Average
+Measures whether an asset is overbought or oversold.
+
 ```
-SMA(3) > SMA(7)  → Short-term trend উপরে → Bullish 📈
-SMA(3) < SMA(7)  → Short-term trend নিচে → Bearish 📉
+RSI < 30  →  Oversold    →  Price likely to bounce UP    (Bullish signal)
+RSI > 70  →  Overbought  →  Price likely to pull DOWN    (Bearish signal)
+30 to 70  →  Normal zone →  Direction depends on other indicators
 ```
 
-### 3️⃣ ROC — Rate of Change (Momentum)
+### 2. SMA — Simple Moving Average
+
+Compares short-term and long-term average prices to detect trend direction.
+
 ```
-ROC > 0   → দাম বাড়ছে → Positive momentum
-ROC < 0   → দাম কমছে → Negative momentum
-ROC > 0.3 → Strong upward momentum
+SMA(3) > SMA(7)  →  Short-term trend is rising   →  Bullish
+SMA(3) < SMA(7)  →  Short-term trend is falling  →  Bearish
 ```
 
-### Final Signal Logic:
+### 3. ROC — Rate of Change (Momentum)
+
+Measures the speed and direction of recent price movement.
+
 ```
-BUY  → Prediction UP   + Confidence MEDIUM বা HIGH
-SELL → Prediction DOWN + Confidence MEDIUM বা HIGH
-HOLD → Mixed signals  বা Confidence LOW
+ROC > +0.3%  →  Strong upward momentum
+ROC > 0      →  Positive momentum
+ROC < 0      →  Negative momentum
+ROC < -0.3%  →  Strong downward momentum
 ```
 
-> ⚠️ **গুরুত্বপূর্ণ:** Prediction এর accuracy বাড়তে সময় লাগে। App যত বেশি সময় চালু থাকবে এবং যত বেশি data point জমা হবে (৭টির বেশি), prediction তত নির্ভুল হবে।
+### Final Signal Logic
+
+```
+All three indicators are scored and combined:
+
+BUY  →  Direction UP   + Confidence MEDIUM or HIGH
+SELL →  Direction DOWN + Confidence MEDIUM or HIGH
+HOLD →  Mixed signals   OR Confidence LOW
+```
+
+> **Important:** Prediction accuracy improves over time. The app needs at least 3 data points to begin predicting, and reaches full accuracy after 7 or more points — approximately 7 minutes of runtime.
 
 ---
 
-## 💱 BDT Conversion কীভাবে হয়?
+## 💱 How BDT Conversion Works
 
 ```
-আন্তর্জাতিক বাজার থেকে পাওয়া মূল্য: USD per Troy Ounce
-↓
-প্রতি গ্রাম (USD) = মূল্য ÷ ৩১.১০৩৫
-↓
-প্রতি গ্রাম (BDT) = প্রতি গ্রাম (USD) × Live USD/BDT Rate
-↓
-প্রতি তোলা (BDT) = প্রতি গ্রাম (BDT) × ১১.৬৬৩৮
+Step 1:  Fetch price in USD per Troy Ounce from GoldAPI.io
+         Example: Gold = $3,290.00 / troy oz
+
+Step 2:  Convert to USD per gram
+         $3,290.00 / 31.1035 = $105.77 / gram
+
+Step 3:  Convert to BDT per gram using the live exchange rate
+         $105.77 x 110.50 = 11,687 BDT / gram
+
+Step 4:  Convert to BDT per tola  (1 tola = 11.6638 grams)
+         11,687 x 11.6638 = 1,36,305 BDT / tola
 ```
 
-**Live USD/BDT Rate** — `open.er-api.com` থেকে real-time নেওয়া হয়। যদি internet সমস্যায় rate না পাওয়া যায়, তাহলে fallback হিসেবে **৳১১০ = $১** ব্যবহার করা হয়।
+The live **USD to BDT** rate is fetched automatically from `open.er-api.com` on every refresh. If the exchange rate API is temporarily unavailable, a fallback rate of **110 BDT = 1 USD** is used until the connection is restored.
 
 ---
 
@@ -183,16 +208,37 @@ HOLD → Mixed signals  বা Confidence LOW
 ```
 goldtrack-pro/
 │
-└── GoldTrack-Pro.html     # সম্পূর্ণ অ্যাপ — একটাই ফাইল!
-    │
-    ├── 🎨 CSS Styles       (Dark theme, responsive layout)
-    ├── 🏗️ HTML Structure   (Dashboard, cards, charts)
-    └── ⚙️ JavaScript       (API fetch, prediction engine, charts)
-        ├── fetchMetal()        → GoldAPI.io থেকে দাম আনা
-        ├── runPrediction()     → RSI + SMA + ROC calculation
-        ├── updatePriceUI()     → BDT তে display
-        ├── updateChart()       → Chart.js দিয়ে গ্রাফ
-        └── updateSignalCard()  → BUY/SELL/HOLD badge update
+├── GoldTrack-Pro.html     ← The entire application in one single file
+└── README.md              ← This documentation file
+```
+
+The entire app — HTML, CSS, and JavaScript — lives inside a single self-contained file. No build tools, no package manager, and no dependencies to install.
+
+**Internal structure of GoldTrack-Pro.html:**
+
+```
+GoldTrack-Pro.html
+│
+├── <style>                 Dark theme CSS and responsive grid layout
+│
+├── <body>                  Dashboard HTML structure
+│   ├── Header              Logo, live clock, LIVE indicator
+│   ├── API Setup Screen    Shown only on first visit
+│   ├── Market Status Bar   Open/Close status, BDT rate, daily High/Low chips
+│   ├── Signal Cards        BUY / SELL / HOLD for Gold and Silver
+│   ├── Price Cards         BDT per gram, BDT per tola, USD per oz
+│   ├── Prediction Cards    AI direction, RSI bar, SMA signal, ROC value
+│   └── Chart Cards         Line charts for Gold and Silver price history
+│
+└── <script>                All application logic
+    ├── fetchMetal()            Fetch price data from GoldAPI.io
+    ├── fetchAllPrices()        Orchestrate all API calls and BDT rate fetch
+    ├── runPrediction()         RSI + SMA + ROC calculation engine
+    ├── updatePriceUI()         Render BDT prices to the DOM
+    ├── updateChart()           Build and update Chart.js line charts
+    ├── updateSignalCard()      Render the BUY / SELL / HOLD badge
+    ├── appendHistory()         Save price data points to localStorage
+    └── startCountdown()        Manage the 60-second auto-refresh timer
 ```
 
 ---
@@ -201,108 +247,135 @@ goldtrack-pro/
 
 | Technology | Purpose |
 |---|---|
-| **Vanilla HTML/CSS/JS** | কোনো framework ছাড়া, সরাসরি browser এ চলে |
-| **Chart.js v4** | সুন্দর interactive price charts |
-| **GoldAPI.io** | Real-time gold & silver price data |
-| **Open Exchange Rates API** | Live USD → BDT conversion rate |
-| **localStorage** | Price history browser এ সংরক্ষণ |
-| **Google Fonts (Syne + DM Mono)** | Professional typography |
+| **Vanilla HTML / CSS / JS** | Zero framework — runs directly in any browser without installation |
+| **Chart.js v4** | Interactive and responsive price history line charts |
+| **GoldAPI.io** | Real-time gold and silver price data source |
+| **Open Exchange Rates API** | Live USD to BDT currency conversion rate |
+| **localStorage** | Client-side price history storage — no backend or server needed |
+| **Google Fonts** | Syne (display font) and DM Mono (number font) |
 
 ---
 
 ## ⚙️ Configuration
 
-| Setting | Default | পরিবর্তন করবেন কীভাবে |
+The following constants can be adjusted at the top of the `<script>` block inside `GoldTrack-Pro.html`:
+
+| Constant | Default | Description |
 |---|---|---|
-| Auto-refresh interval | ৬০ সেকেন্ড | HTML এ `REFRESH_SECS = 60` বদলান |
-| History points | সর্বোচ্চ ২০ | `MAX_HISTORY = 20` বদলান |
-| BDT fallback rate | ৳১১০ | `usdToBdt = 110` বদলান |
+| `REFRESH_SECS` | `60` | Auto-refresh interval in seconds |
+| `MAX_HISTORY` | `20` | Maximum number of price history points stored |
+| `usdToBdt` | `110` | Fallback BDT rate when exchange rate API is unavailable |
+| `TOLA` | `11.6638` | Number of grams per tola |
+| `TROY_OZ_TO_GRAM` | `31.1035` | Number of grams per troy ounce |
 
 ---
 
-## ❓ সাধারণ সমস্যা ও সমাধান
+## ❓ Troubleshooting
 
 <details>
-<summary><b>❌ "Market data unavailable" দেখাচ্ছে</b></summary>
+<summary><b>Market data unavailable — retrying...</b></summary>
 
-**কারণ:** API Key ভুল অথবা free tier এর ১০০ request শেষ হয়ে গেছে।
+**Cause:** The API key is incorrect, or the free tier monthly limit of 100 requests has been reached.
 
-**সমাধান:**
-1. [goldapi.io](https://goldapi.io) → Dashboard → আপনার API Key সঠিক কিনা দেখুন
-2. Free tier শেষ হলে নতুন email দিয়ে আরেকটি ফ্রি account খুলুন
-3. "🔑 Key পরিবর্তন" বাটনে ক্লিক করে নতুন key দিন
+**Fix:**
+1. Visit [goldapi.io](https://goldapi.io) and log in to verify your API key is correct
+2. If the monthly limit is exhausted, sign up with a different email for a new free account
+3. Click the **Change Key** button in the app and enter the new key
 </details>
 
 <details>
-<summary><b>❌ Prediction কাজ করছে না / "ডেটা কম" দেখাচ্ছে</b></summary>
+<summary><b>Prediction shows "Not enough data"</b></summary>
 
-**কারণ:** Prediction এর জন্য কমপক্ষে ৩টি data point দরকার।
+**Cause:** The prediction engine requires at least 3 data points to run. One point is collected every 60 seconds.
 
-**সমাধান:** App টা চালু রাখুন — প্রতি ৬০ সেকেন্ডে একটি করে data point জমা হয়। ৩ মিনিট পরে prediction শুরু হবে, ৭ মিনিট পরে পূর্ণ accuracy পাবেন।
+**Fix:** Keep the app open. Predictions begin after approximately 3 minutes and reach full accuracy after 7 minutes.
 </details>
 
 <details>
-<summary><b>❌ Chart দেখা যাচ্ছে না</b></summary>
+<summary><b>Charts are not displaying</b></summary>
 
-**কারণ:** মাত্র ২টির কম data point আছে।
+**Cause:** Fewer than 2 data points have been collected yet.
 
-**সমাধান:** App চালু রাখুন, ২ মিনিট পরে chart আসবে।
+**Fix:** Wait 2 minutes with the app open. Charts appear automatically once enough data is available.
 </details>
 
 <details>
-<summary><b>❌ Phone এ open হচ্ছে না</b></summary>
+<summary><b>Cannot open the app on my phone</b></summary>
 
-**সমাধান:** ফাইলটা WhatsApp বা Gmail এ নিজেকে পাঠান → Phone এ download করুন → Chrome এ open করুন।
+**Fix:** Send the `GoldTrack-Pro.html` file to yourself via WhatsApp or Gmail. Download it on your phone and open it with the Chrome browser.
 </details>
 
 <details>
-<summary><b>❌ BDT rate সঠিক না দেখাচ্ছে</b></summary>
+<summary><b>The BDT rate looks incorrect</b></summary>
 
-**কারণ:** Exchange rate API সাময়িকভাবে unavailable।
+**Cause:** The exchange rate API is temporarily unreachable, so the fallback rate of 110 BDT per USD is being used.
 
-**সমাধান:** Fallback rate (৳১১০) ব্যবহার হচ্ছে। Internet connection চেক করুন এবং Refresh করুন।
+**Fix:** Check your internet connection and click the Refresh button. The correct live rate will load automatically.
+</details>
+
+<details>
+<summary><b>The app asks for the API key again after I close the browser</b></summary>
+
+**Cause:** Some browser privacy settings clear localStorage data on exit.
+
+**Fix:** Disable "Clear cookies and site data when you close all windows" in your browser settings. Avoid using Incognito or Private mode, as it does not retain localStorage data.
 </details>
 
 ---
 
 ## 🗺️ Roadmap
 
-- [ ] 📲 PWA (Progressive Web App) সাপোর্ট — Home Screen এ install করা যাবে
-- [ ] 🔔 Price Alert — নির্দিষ্ট দামে notification
-- [ ] 📅 7-দিন / 30-দিনের historical data
-- [ ] 🇧🇩 BDT এ সরাসরি API integration (Bangladesh Bank rate)
-- [ ] 📤 Excel এ export করার সুবিধা
-- [ ] 🌐 Bangla/English ভাষা switch
+- [ ] PWA support — install directly to phone home screen without a browser
+- [ ] Price alerts — receive a notification when gold or silver hits a target price
+- [ ] Extended history — 7-day and 30-day trend views
+- [ ] Bangladesh Bank official BDT rate integration
+- [ ] Export price history to Excel or CSV
+- [ ] Language toggle between English and Bangla
+
+---
+
+## 🤝 Contributing
+
+Contributions are welcome. If you have a feature idea, found a bug, or want to improve the prediction engine:
+
+1. Fork this repository
+2. Create a new branch: `git checkout -b feature/your-feature-name`
+3. Make your changes
+4. Commit your changes: `git commit -m "Add: description of your change"`
+5. Push the branch: `git push origin feature/your-feature-name`
+6. Open a Pull Request
 
 ---
 
 ## ⚠️ Disclaimer
 
-> GoldTrack Pro-এর AI predictions শুধুমাত্র reference এর জন্য তৈরি। এটি কোনো **certified financial advice নয়**। সোনা-রূপার বাজার অনেক কারণে পরিবর্তন হতে পারে — রাজনৈতিক পরিস্থিতি, মুদ্রাস্ফীতি, আন্তর্জাতিক সংকট ইত্যাদি — যা কোনো algorithm পুরোপুরি predict করতে পারে না।
->
-> **সবসময় নিজের বিচার এবং প্রয়োজনে বিশেষজ্ঞের পরামর্শ অনুযায়ী ব্যবসায়িক সিদ্ধান্ত নিন।**
+The AI-generated predictions in GoldTrack Pro are for **informational and reference purposes only**. This software does **not** constitute certified financial advice. Precious metal markets can be influenced by geopolitical events, inflation, currency fluctuations, and other unpredictable factors that no algorithm can fully account for.
+
+**Always apply your own judgment and consult a qualified financial advisor before making any trading decisions.**
 
 ---
 
 ## 📄 License
 
-MIT License — ফ্রিতে ব্যবহার করুন, পরিবর্তন করুন, শেয়ার করুন।
+This project is licensed under the **MIT License** — free to use, modify, and distribute.
 
 ---
 
 ## 🙏 Credits
 
-- **Data:** [GoldAPI.io](https://goldapi.io) — Real-time precious metals pricing
-- **Exchange Rate:** [Open Exchange Rates](https://open.er-api.com) — Live USD/BDT rate
-- **Charts:** [Chart.js](https://chartjs.org)
-- **Fonts:** [Google Fonts](https://fonts.google.com) — Syne & DM Mono
+| Resource | Purpose |
+|---|---|
+| [GoldAPI.io](https://goldapi.io) | Real-time gold and silver price data |
+| [Open Exchange Rates](https://open.er-api.com) | Live USD to BDT conversion rate |
+| [Chart.js](https://chartjs.org) | Price history charts |
+| [Google Fonts](https://fonts.google.com) | Syne and DM Mono typefaces |
 
 ---
 
 <div align="center">
 
-**⭐ যদি এই project টা আপনার কাজে লেগে থাকে, একটা Star দিন! ⭐**
+**If GoldTrack Pro helped your business, please give it a star ⭐**
 
-Made with ❤️ for Bangladesh's gold & silver traders 🇧🇩
+Made with ❤️ for Bangladesh's gold and silver traders 🇧🇩
 
 </div>
