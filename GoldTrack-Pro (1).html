@@ -1,0 +1,1116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GoldTrack Pro</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<style>
+  :root {
+    --bg: #080808;
+    --bg2: #0f0f0f;
+    --bg3: #161616;
+    --border: rgba(255,255,255,0.07);
+    --gold: #F59E0B;
+    --gold2: #FCD34D;
+    --gold-dim: rgba(245,158,11,0.12);
+    --silver: #94A3B8;
+    --silver2: #CBD5E1;
+    --silver-dim: rgba(148,163,184,0.12);
+    --green: #10B981;
+    --red: #EF4444;
+    --yellow: #EAB308;
+    --text: #F1F5F9;
+    --muted: #64748B;
+    --font: 'Syne', sans-serif;
+    --mono: 'DM Mono', monospace;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--font);
+    min-height: 100vh;
+    background-image:
+      radial-gradient(ellipse at 10% 0%, rgba(245,158,11,0.06) 0%, transparent 50%),
+      radial-gradient(ellipse at 90% 100%, rgba(148,163,184,0.04) 0%, transparent 50%);
+  }
+
+  /* HEADER */
+  header {
+    background: rgba(8,8,8,0.95);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--border);
+    position: sticky; top: 0; z-index: 100;
+    padding: 0 24px;
+  }
+  .header-inner {
+    max-width: 1400px; margin: 0 auto;
+    display: flex; align-items: center; justify-content: space-between;
+    height: 64px; gap: 16px;
+  }
+  .logo { display: flex; align-items: center; gap: 10px; }
+  .logo-icon {
+    width: 36px; height: 36px;
+    background: linear-gradient(135deg, var(--gold), #B45309);
+    border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 18px;
+  }
+  .logo-text { font-size: 18px; font-weight: 800; letter-spacing: -0.5px; }
+  .logo-text span { color: var(--gold); }
+  .header-right { display: flex; align-items: center; gap: 20px; }
+  .live-clock { font-family: var(--mono); font-size: 13px; color: var(--muted); }
+  .live-badge {
+    display: flex; align-items: center; gap: 6px;
+    background: rgba(16,185,129,0.1); border: 1px solid rgba(16,185,129,0.2);
+    border-radius: 20px; padding: 4px 10px;
+    font-size: 12px; color: var(--green); font-weight: 600;
+  }
+  .live-dot {
+    width: 6px; height: 6px; border-radius: 50%;
+    background: var(--green);
+    animation: pulse-dot 1.5s ease-in-out infinite;
+  }
+  @keyframes pulse-dot {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.5; transform: scale(0.7); }
+  }
+
+  /* API KEY SETUP */
+  .api-setup {
+    max-width: 600px; margin: 60px auto; padding: 40px;
+    background: var(--bg3); border: 1px solid var(--border);
+    border-radius: 20px; text-align: center;
+  }
+  .api-setup h2 { font-size: 22px; font-weight: 700; margin-bottom: 8px; }
+  .api-setup p { color: var(--muted); font-size: 14px; margin-bottom: 24px; line-height: 1.6; }
+  .api-input-row { display: flex; gap: 10px; }
+  .api-input {
+    flex: 1; padding: 12px 16px;
+    background: var(--bg2); border: 1px solid var(--border);
+    border-radius: 12px; color: var(--text); font-family: var(--mono);
+    font-size: 13px; outline: none;
+    transition: border-color 0.2s;
+  }
+  .api-input:focus { border-color: var(--gold); }
+  .api-input::placeholder { color: var(--muted); }
+  .btn-gold {
+    padding: 12px 20px; background: var(--gold);
+    color: #000; border: none; border-radius: 12px;
+    font-family: var(--font); font-size: 14px; font-weight: 700;
+    cursor: pointer; white-space: nowrap;
+    transition: background 0.2s, transform 0.1s;
+  }
+  .btn-gold:hover { background: var(--gold2); }
+  .btn-gold:active { transform: scale(0.98); }
+  .api-link { margin-top: 16px; font-size: 13px; color: var(--muted); }
+  .api-link a { color: var(--gold); text-decoration: none; }
+
+  /* MAIN LAYOUT */
+  .main { max-width: 1400px; margin: 0 auto; padding: 24px; }
+  .hidden { display: none !important; }
+
+  /* REFRESH BAR */
+  .refresh-bar {
+    display: flex; align-items: center; justify-content: space-between;
+    margin-bottom: 24px; flex-wrap: wrap; gap: 12px;
+  }
+  .refresh-info { display: flex; align-items: center; gap: 12px; }
+  .last-updated { font-size: 13px; color: var(--muted); font-family: var(--mono); }
+  .countdown {
+    display: flex; align-items: center; gap: 8px;
+    font-size: 13px; color: var(--muted);
+  }
+  .countdown-ring {
+    width: 32px; height: 32px; position: relative;
+  }
+  .countdown-ring svg { transform: rotate(-90deg); }
+  .countdown-ring circle {
+    fill: none; stroke: var(--border); stroke-width: 2.5;
+  }
+  .countdown-ring .progress {
+    stroke: var(--gold); stroke-linecap: round;
+    stroke-dasharray: 88;
+    transition: stroke-dashoffset 1s linear;
+  }
+  .countdown-num {
+    position: absolute; inset: 0;
+    display: flex; align-items: center; justify-content: center;
+    font-family: var(--mono); font-size: 10px; font-weight: 500;
+  }
+  .refresh-btn {
+    padding: 8px 16px; background: var(--bg3);
+    border: 1px solid var(--border); border-radius: 10px;
+    color: var(--text); font-family: var(--font);
+    font-size: 13px; font-weight: 600; cursor: pointer;
+    transition: border-color 0.2s, background 0.2s;
+    display: flex; align-items: center; gap: 6px;
+  }
+  .refresh-btn:hover { border-color: var(--gold); background: var(--gold-dim); }
+  .refresh-btn.loading .spin { animation: spin 0.8s linear infinite; }
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  /* MARKET STATUS */
+  .market-status-bar {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 12px; margin-bottom: 24px;
+  }
+  .status-chip {
+    background: var(--bg3); border: 1px solid var(--border);
+    border-radius: 12px; padding: 12px 16px;
+    display: flex; flex-direction: column; gap: 4px;
+  }
+  .status-chip .label { font-size: 11px; color: var(--muted); letter-spacing: 0.5px; text-transform: uppercase; }
+  .status-chip .value { font-size: 14px; font-weight: 700; font-family: var(--mono); }
+  .market-open { color: var(--green); }
+  .market-closed { color: var(--red); }
+
+  /* SIGNAL BADGES — TOP */
+  .signals-row {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 16px; margin-bottom: 24px;
+  }
+  .signal-card {
+    border-radius: 16px; padding: 24px;
+    border: 1px solid; text-align: center;
+    position: relative; overflow: hidden;
+  }
+  .signal-card.buy {
+    background: rgba(16,185,129,0.06);
+    border-color: rgba(16,185,129,0.25);
+  }
+  .signal-card.sell {
+    background: rgba(239,68,68,0.06);
+    border-color: rgba(239,68,68,0.25);
+  }
+  .signal-card.hold {
+    background: rgba(234,179,8,0.06);
+    border-color: rgba(234,179,8,0.25);
+  }
+  .signal-metal-label {
+    font-size: 11px; letter-spacing: 2px; text-transform: uppercase;
+    color: var(--muted); margin-bottom: 8px;
+  }
+  .signal-icon { font-size: 36px; margin-bottom: 8px; display: block; }
+  .signal-word {
+    font-size: 28px; font-weight: 800; letter-spacing: 2px;
+  }
+  .signal-card.buy .signal-word { color: var(--green); }
+  .signal-card.sell .signal-word { color: var(--red); }
+  .signal-card.hold .signal-word { color: var(--yellow); }
+  .signal-conf {
+    font-size: 11px; font-weight: 600; letter-spacing: 1px;
+    text-transform: uppercase; margin-top: 4px;
+    padding: 3px 10px; border-radius: 20px; display: inline-block;
+  }
+  .conf-high { background: rgba(16,185,129,0.15); color: var(--green); }
+  .conf-med { background: rgba(234,179,8,0.15); color: var(--yellow); }
+  .conf-low { background: rgba(100,116,139,0.15); color: var(--muted); }
+
+  /* PRICE CARDS */
+  .prices-row {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 16px; margin-bottom: 24px;
+  }
+  .price-card {
+    background: var(--bg3); border: 1px solid var(--border);
+    border-radius: 16px; padding: 24px;
+    position: relative; overflow: hidden;
+  }
+  .price-card.gold-card { border-top: 2px solid var(--gold); }
+  .price-card.silver-card { border-top: 2px solid var(--silver); }
+  .price-card-header {
+    display: flex; align-items: center; justify-content: space-between;
+    margin-bottom: 16px;
+  }
+  .metal-badge {
+    display: flex; align-items: center; gap: 8px;
+    font-size: 13px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase;
+  }
+  .metal-dot {
+    width: 8px; height: 8px; border-radius: 50%;
+  }
+  .gold-dot { background: var(--gold); }
+  .silver-dot { background: var(--silver); }
+  .price-change {
+    font-size: 13px; font-weight: 600; font-family: var(--mono);
+    padding: 4px 10px; border-radius: 8px;
+  }
+  .change-up { color: var(--green); background: rgba(16,185,129,0.1); }
+  .change-down { color: var(--red); background: rgba(239,68,68,0.1); }
+  .change-flat { color: var(--muted); background: rgba(100,116,139,0.1); }
+
+  .price-main {
+    font-size: 36px; font-weight: 800; font-family: var(--mono);
+    letter-spacing: -1px; margin-bottom: 4px;
+  }
+  .price-main.gold-price { color: var(--gold); }
+  .price-main.silver-price { color: var(--silver2); }
+  .price-unit { font-size: 13px; color: var(--muted); margin-bottom: 16px; }
+
+  .price-conversions {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 8px;
+  }
+  .conv-item {
+    background: var(--bg2); border: 1px solid var(--border);
+    border-radius: 10px; padding: 10px 12px;
+  }
+  .conv-label { font-size: 10px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 2px; }
+  .conv-value { font-size: 15px; font-weight: 700; font-family: var(--mono); }
+  .gold-val { color: var(--gold2); }
+  .silver-val { color: var(--silver2); }
+
+  /* PREDICTION CARDS */
+  .predictions-row {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 16px; margin-bottom: 24px;
+  }
+  .pred-card {
+    background: var(--bg3); border: 1px solid var(--border);
+    border-radius: 16px; padding: 24px;
+  }
+  .pred-header {
+    display: flex; align-items: center; justify-content: space-between;
+    margin-bottom: 16px;
+  }
+  .pred-title { font-size: 13px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: var(--muted); }
+  .pred-direction {
+    font-size: 18px; font-weight: 800; display: flex; align-items: center; gap: 8px;
+    margin-bottom: 8px;
+  }
+  .pred-up { color: var(--green); }
+  .pred-down { color: var(--red); }
+  .pred-neutral { color: var(--muted); }
+  .pred-reason { font-size: 13px; color: var(--muted); line-height: 1.5; margin-bottom: 16px; }
+  .indicators-row { display: flex; flex-direction: column; gap: 8px; }
+  .indicator-item {
+    display: flex; align-items: center; justify-content: space-between;
+    font-size: 12px;
+  }
+  .ind-label { color: var(--muted); }
+  .ind-value { font-family: var(--mono); font-weight: 600; }
+  .ind-bar {
+    height: 3px; background: var(--bg2); border-radius: 2px;
+    margin-top: 4px; overflow: hidden;
+  }
+  .ind-fill { height: 100%; border-radius: 2px; transition: width 0.5s; }
+
+  /* CHARTS */
+  .charts-row {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 16px; margin-bottom: 24px;
+  }
+  .chart-card {
+    background: var(--bg3); border: 1px solid var(--border);
+    border-radius: 16px; padding: 24px;
+  }
+  .chart-header {
+    display: flex; align-items: center; justify-content: space-between;
+    margin-bottom: 16px;
+  }
+  .chart-title { font-size: 13px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; }
+  .chart-range { display: flex; gap: 6px; }
+  .chart-stat { font-size: 11px; color: var(--muted); font-family: var(--mono); }
+  .chart-wrap { height: 160px; position: relative; }
+  .no-data-msg {
+    height: 160px; display: flex; align-items: center; justify-content: center;
+    color: var(--muted); font-size: 13px; text-align: center; line-height: 1.6;
+  }
+
+  /* SKELETON */
+  .skeleton {
+    background: linear-gradient(90deg, var(--bg3) 0%, var(--bg2) 50%, var(--bg3) 100%);
+    background-size: 200% 100%;
+    animation: shimmer 1.5s infinite;
+    border-radius: 8px;
+  }
+  @keyframes shimmer { to { background-position: -200% 0; } }
+  .skeleton-h { height: 36px; margin-bottom: 8px; }
+  .skeleton-s { height: 14px; width: 60%; }
+
+  /* ERROR */
+  .error-banner {
+    background: rgba(239,68,68,0.08); border: 1px solid rgba(239,68,68,0.2);
+    border-radius: 12px; padding: 16px 20px;
+    display: flex; align-items: center; gap: 12px;
+    margin-bottom: 20px; font-size: 14px;
+  }
+  .error-icon { font-size: 20px; }
+
+  /* FOOTER */
+  footer {
+    border-top: 1px solid var(--border);
+    padding: 20px 24px; text-align: center;
+    font-size: 12px; color: var(--muted);
+    line-height: 1.6;
+    max-width: 1400px; margin: 0 auto;
+  }
+
+  /* LOADING OVERLAY */
+  .loading-overlay {
+    position: fixed; inset: 0;
+    background: rgba(8,8,8,0.8); backdrop-filter: blur(8px);
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    z-index: 200; gap: 16px;
+  }
+  .loader-ring {
+    width: 48px; height: 48px; border-radius: 50%;
+    border: 3px solid var(--border);
+    border-top-color: var(--gold);
+    animation: spin 0.8s linear infinite;
+  }
+  .loading-text { font-size: 14px; color: var(--muted); }
+
+  /* RESPONSIVE */
+  @media (max-width: 768px) {
+    .header-inner { height: 56px; }
+    .logo-text { font-size: 15px; }
+    .live-clock { display: none; }
+    .main { padding: 16px; }
+    .signals-row, .prices-row, .predictions-row, .charts-row { grid-template-columns: 1fr; }
+    .price-main { font-size: 28px; }
+    .signal-word { font-size: 22px; }
+    .market-status-bar { grid-template-columns: repeat(2, 1fr); }
+    .api-setup { margin: 24px 16px; padding: 24px; }
+    .api-input-row { flex-direction: column; }
+  }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header>
+  <div class="header-inner">
+    <div class="logo">
+      <div class="logo-icon">🪙</div>
+      <div class="logo-text">Gold<span>Track</span> Pro</div>
+    </div>
+    <div class="header-right">
+      <div class="live-clock" id="clock">--:--:--</div>
+      <div class="live-badge">
+        <div class="live-dot"></div>
+        LIVE
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- API KEY SETUP -->
+<div id="setupSection" class="main">
+  <div class="api-setup">
+    <div style="font-size:48px;margin-bottom:16px">🪙</div>
+    <h2>GoldTrack Pro সেটআপ</h2>
+    <p>
+      শুরু করতে একটি <strong>GoldAPI.io</strong> API key দরকার।<br>
+      নিচের লিংক থেকে ফ্রিতে key নাও এবং এখানে paste করো।
+    </p>
+    <div class="api-input-row">
+      <input class="api-input" id="apiKeyInput" type="text" placeholder="goldapi-xxxxxxxxxxxxxxxxxx" />
+      <button class="btn-gold" onclick="saveApiKey()">শুরু করো →</button>
+    </div>
+    <div class="api-link">
+      ফ্রি API Key পেতে: <a href="https://goldapi.io" target="_blank">goldapi.io</a> → Sign Up → Copy API Key
+    </div>
+    <div id="keyError" style="color:var(--red);font-size:13px;margin-top:12px"></div>
+  </div>
+</div>
+
+<!-- MAIN DASHBOARD -->
+<div id="dashboard" class="main hidden">
+
+  <!-- ERROR BANNER -->
+  <div id="errorBanner" class="error-banner hidden">
+    <div class="error-icon">⚠️</div>
+    <div id="errorMsg">Market data unavailable — retrying...</div>
+  </div>
+
+  <!-- REFRESH BAR -->
+  <div class="refresh-bar">
+    <div class="refresh-info">
+      <div class="countdown">
+        <div class="countdown-ring">
+          <svg viewBox="0 0 32 32" width="32" height="32">
+            <circle cx="16" cy="16" r="14" class="track"></circle>
+            <circle cx="16" cy="16" r="14" class="progress" id="countdownRing"></circle>
+          </svg>
+          <div class="countdown-num" id="countdownNum">60</div>
+        </div>
+        <span>সেকেন্ডে আপডেট</span>
+      </div>
+      <div class="last-updated" id="lastUpdated">—</div>
+    </div>
+    <div style="display:flex;gap:10px;align-items:center">
+      <button class="btn-gold" onclick="resetApiKey()" style="background:var(--bg3);color:var(--muted);border:1px solid var(--border);font-size:12px;padding:8px 14px;">🔑 Key পরিবর্তন</button>
+      <button class="refresh-btn" id="refreshBtn" onclick="fetchAllPrices()">
+        <span class="spin">↻</span> রিফ্রেশ
+      </button>
+    </div>
+  </div>
+
+  <!-- MARKET STATUS BAR -->
+  <div class="market-status-bar" id="marketBar">
+    <div class="status-chip">
+      <div class="label">মার্কেট স্ট্যাটাস</div>
+      <div class="value" id="mktStatus">—</div>
+    </div>
+    <div class="status-chip">
+      <div class="label">💱 USD → BDT রেট</div>
+      <div class="value" id="bdtRate" style="color:#34D399">—</div>
+    </div>
+    <div class="status-chip">
+      <div class="label">Gold High (৳/g)</div>
+      <div class="value" id="goldHigh" style="color:var(--gold)">—</div>
+    </div>
+    <div class="status-chip">
+      <div class="label">Gold Low (৳/g)</div>
+      <div class="value" id="goldLow" style="color:var(--gold)">—</div>
+    </div>
+    <div class="status-chip">
+      <div class="label">Silver High (৳/g)</div>
+      <div class="value" id="silverHigh" style="color:var(--silver2)">—</div>
+    </div>
+    <div class="status-chip">
+      <div class="label">Silver Low (৳/g)</div>
+      <div class="value" id="silverLow" style="color:var(--silver2)">—</div>
+    </div>
+  </div>
+
+  <!-- BUY/SELL SIGNALS -->
+  <div class="signals-row">
+    <div class="signal-card" id="goldSignalCard">
+      <div class="signal-metal-label">🥇 GOLD — XAU/USD</div>
+      <span class="signal-icon" id="goldSignalIcon">⏳</span>
+      <div class="signal-word" id="goldSignalWord">LOADING</div>
+      <div><span class="signal-conf conf-low" id="goldConfBadge">—</span></div>
+    </div>
+    <div class="signal-card" id="silverSignalCard">
+      <div class="signal-metal-label">🥈 SILVER — XAG/USD</div>
+      <span class="signal-icon" id="silverSignalIcon">⏳</span>
+      <div class="signal-word" id="silverSignalWord">LOADING</div>
+      <div><span class="signal-conf conf-low" id="silverConfBadge">—</span></div>
+    </div>
+  </div>
+
+  <!-- PRICE CARDS -->
+  <div class="prices-row">
+    <div class="price-card gold-card">
+      <div class="price-card-header">
+        <div class="metal-badge"><div class="metal-dot gold-dot"></div>GOLD</div>
+        <div class="price-change change-flat" id="goldChange">—</div>
+      </div>
+      <div class="price-main gold-price" id="goldPrice">—</div>
+      <div class="price-unit">BDT প্রতি গ্রাম</div>
+      <div class="price-conversions">
+        <div class="conv-item">
+          <div class="conv-label">প্রতি তোলা (BDT)</div>
+          <div class="conv-value gold-val" id="goldPerGram">—</div>
+        </div>
+        <div class="conv-item">
+          <div class="conv-label">USD/troy oz</div>
+          <div class="conv-value gold-val" id="goldPerTola">—</div>
+        </div>
+      </div>
+    </div>
+    <div class="price-card silver-card">
+      <div class="price-card-header">
+        <div class="metal-badge"><div class="metal-dot silver-dot"></div>SILVER</div>
+        <div class="price-change change-flat" id="silverChange">—</div>
+      </div>
+      <div class="price-main silver-price" id="silverPrice">—</div>
+      <div class="price-unit">BDT প্রতি গ্রাম</div>
+      <div class="price-conversions">
+        <div class="conv-item">
+          <div class="conv-label">প্রতি তোলা (BDT)</div>
+          <div class="conv-value silver-val" id="silverPerGram">—</div>
+        </div>
+        <div class="conv-item">
+          <div class="conv-label">USD/troy oz</div>
+          <div class="conv-value silver-val" id="silverPerTola">—</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PREDICTIONS -->
+  <div class="predictions-row">
+    <div class="pred-card">
+      <div class="pred-header">
+        <div class="pred-title">🧠 AI Prediction — Gold</div>
+      </div>
+      <div class="pred-direction pred-neutral" id="goldPredDir">বিশ্লেষণ চলছে...</div>
+      <div class="pred-reason" id="goldPredReason">ইতিহাস সংগ্রহ করা হচ্ছে।</div>
+      <div class="indicators-row">
+        <div class="indicator-item">
+          <span class="ind-label">RSI</span>
+          <span class="ind-value" id="goldRSI">—</span>
+        </div>
+        <div class="ind-bar"><div class="ind-fill" id="goldRSIBar" style="width:50%;background:var(--gold)"></div></div>
+        <div class="indicator-item">
+          <span class="ind-label">SMA Trend</span>
+          <span class="ind-value" id="goldSMA">—</span>
+        </div>
+        <div class="indicator-item">
+          <span class="ind-label">Momentum (ROC)</span>
+          <span class="ind-value" id="goldROC">—</span>
+        </div>
+      </div>
+    </div>
+    <div class="pred-card">
+      <div class="pred-header">
+        <div class="pred-title">🧠 AI Prediction — Silver</div>
+      </div>
+      <div class="pred-direction pred-neutral" id="silverPredDir">বিশ্লেষণ চলছে...</div>
+      <div class="pred-reason" id="silverPredReason">ইতিহাস সংগ্রহ করা হচ্ছে।</div>
+      <div class="indicators-row">
+        <div class="indicator-item">
+          <span class="ind-label">RSI</span>
+          <span class="ind-value" id="silverRSI">—</span>
+        </div>
+        <div class="ind-bar"><div class="ind-fill" id="silverRSIBar" style="width:50%;background:var(--silver)"></div></div>
+        <div class="indicator-item">
+          <span class="ind-label">SMA Trend</span>
+          <span class="ind-value" id="silverSMA">—</span>
+        </div>
+        <div class="indicator-item">
+          <span class="ind-label">Momentum (ROC)</span>
+          <span class="ind-value" id="silverROC">—</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CHARTS -->
+  <div class="charts-row">
+    <div class="chart-card">
+      <div class="chart-header">
+        <div class="chart-title" style="color:var(--gold)">📈 Gold Price History</div>
+        <div style="display:flex;flex-direction:column;align-items:flex-end;gap:2px">
+          <div class="chart-stat" id="goldChartMin">Min: —</div>
+          <div class="chart-stat" id="goldChartMax">Max: —</div>
+        </div>
+      </div>
+      <div class="chart-wrap">
+        <canvas id="goldChart"></canvas>
+        <div class="no-data-msg hidden" id="goldNoData">
+          ডেটা সংগ্রহ হচ্ছে।<br>প্রতি ৬০ সেকেন্ডে নতুন পয়েন্ট যোগ হবে।
+        </div>
+      </div>
+    </div>
+    <div class="chart-card">
+      <div class="chart-header">
+        <div class="chart-title" style="color:var(--silver2)">📈 Silver Price History</div>
+        <div style="display:flex;flex-direction:column;align-items:flex-end;gap:2px">
+          <div class="chart-stat" id="silverChartMin">Min: —</div>
+          <div class="chart-stat" id="silverChartMax">Max: —</div>
+        </div>
+      </div>
+      <div class="chart-wrap">
+        <canvas id="silverChart"></canvas>
+        <div class="no-data-msg hidden" id="silverNoData">
+          ডেটা সংগ্রহ হচ্ছে।<br>প্রতি ৬০ সেকেন্ডে নতুন পয়েন্ট যোগ হবে।
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- FOOTER -->
+<footer>
+  ⚠️ <strong>Disclaimer:</strong> GoldTrack Pro-এর AI predictions শুধুমাত্র reference এর জন্য। এটি কোনো certified financial advice নয়।
+  সব সময় নিজের বিচার এবং বিশেষজ্ঞের পরামর্শ অনুযায়ী ব্যবসায়িক সিদ্ধান্ত নিন।<br>
+  Data source: GoldAPI.io &nbsp;|&nbsp; GoldTrack Pro © 2025
+</footer>
+
+<!-- LOADING OVERLAY -->
+<div class="loading-overlay hidden" id="loadingOverlay">
+  <div class="loader-ring"></div>
+  <div class="loading-text" id="loadingText">মার্কেট ডেটা লোড হচ্ছে...</div>
+</div>
+
+<script>
+// ─────────────────────────────────────────────
+//  CONSTANTS
+// ─────────────────────────────────────────────
+const TROY_OZ_TO_GRAM = 31.1035;
+const TOLA = 11.6638;
+const HISTORY_KEY = 'goldtrack_history_v2';
+const APIKEY_STORE = 'goldtrack_apikey';
+const MAX_HISTORY = 20;
+const REFRESH_SECS = 60;
+
+// ─────────────────────────────────────────────
+//  STATE
+// ─────────────────────────────────────────────
+let apiKey = '';
+let countdown = REFRESH_SECS;
+let countdownTimer = null;
+let goldChartInst = null;
+let silverChartInst = null;
+let currentGold = null;
+let currentSilver = null;
+let usdToBdt = 110; // fallback rate, will be updated live
+
+// ─────────────────────────────────────────────
+//  INIT
+// ─────────────────────────────────────────────
+window.addEventListener('DOMContentLoaded', () => {
+  startClock();
+  const storedKey = localStorage.getItem(APIKEY_STORE);
+  if (storedKey) {
+    apiKey = storedKey;
+    showDashboard();
+    fetchAllPrices();
+    startCountdown();
+  }
+});
+
+function saveApiKey() {
+  const inp = document.getElementById('apiKeyInput').value.trim();
+  if (!inp) { document.getElementById('keyError').textContent = 'API Key দাও।'; return; }
+  apiKey = inp;
+  localStorage.setItem(APIKEY_STORE, inp);
+  document.getElementById('keyError').textContent = '';
+  showDashboard();
+  fetchAllPrices();
+  startCountdown();
+}
+
+function resetApiKey() {
+  localStorage.removeItem(APIKEY_STORE);
+  apiKey = '';
+  document.getElementById('setupSection').classList.remove('hidden');
+  document.getElementById('dashboard').classList.add('hidden');
+  clearInterval(countdownTimer);
+}
+
+function showDashboard() {
+  document.getElementById('setupSection').classList.add('hidden');
+  document.getElementById('dashboard').classList.remove('hidden');
+}
+
+// ─────────────────────────────────────────────
+//  CLOCK
+// ─────────────────────────────────────────────
+function startClock() {
+  const el = document.getElementById('clock');
+  function tick() {
+    const now = new Date();
+    el.textContent = now.toLocaleTimeString('en-BD', { hour12: false });
+  }
+  tick(); setInterval(tick, 1000);
+}
+
+// ─────────────────────────────────────────────
+//  MARKET STATUS
+// ─────────────────────────────────────────────
+function isGoldMarketOpen() {
+  const now = new Date();
+  const utcDay = now.getUTCDay(); // 0=Sun,6=Sat
+  const utcH = now.getUTCHours();
+  if (utcDay === 0) return utcH >= 22; // Sunday open 22:00 UTC
+  if (utcDay === 6) return false; // Saturday closed
+  return true; // Mon-Fri always open
+}
+
+// ─────────────────────────────────────────────
+//  API FETCH
+// ─────────────────────────────────────────────
+async function fetchMetal(symbol) {
+  const url = `https://www.goldapi.io/api/${symbol}/USD`;
+  const resp = await fetch(url, {
+    headers: { 'x-access-token': apiKey, 'Content-Type': 'application/json' }
+  });
+  if (!resp.ok) throw new Error(`API error ${resp.status}`);
+  return resp.json();
+}
+
+async function fetchAllPrices() {
+  const btn = document.getElementById('refreshBtn');
+  btn.classList.add('loading');
+  hideError();
+
+  try {
+    const [goldData, silverData, fxData] = await Promise.all([
+      fetchMetal('XAU'),
+      fetchMetal('XAG'),
+      fetch('https://open.er-api.com/v6/latest/USD').then(r => r.json()).catch(() => null)
+    ]);
+
+    if (fxData && fxData.rates && fxData.rates.BDT) {
+      usdToBdt = fxData.rates.BDT;
+      document.getElementById('bdtRate').textContent = '১ USD = ৳' + usdToBdt.toFixed(2);
+    }
+
+    currentGold = goldData;
+    currentSilver = silverData;
+
+    updatePriceUI(goldData, 'gold');
+    updatePriceUI(silverData, 'silver');
+    updateMarketBar(goldData, silverData);
+
+    // Save to history
+    appendHistory('gold', goldData.price);
+    appendHistory('silver', silverData.price);
+
+    const goldHistory = getHistory('gold');
+    const silverHistory = getHistory('silver');
+
+    updateChart('gold', goldHistory);
+    updateChart('silver', silverHistory);
+
+    const goldPred = runPrediction(goldHistory);
+    const silverPred = runPrediction(silverHistory);
+
+    updatePredictionUI('gold', goldPred);
+    updatePredictionUI('silver', silverPred);
+    updateSignalCard('gold', goldPred);
+    updateSignalCard('silver', silverPred);
+
+    document.getElementById('lastUpdated').textContent =
+      'আপডেট: ' + new Date().toLocaleTimeString('en-BD');
+  } catch (err) {
+    showError('Market data unavailable — retrying... (' + err.message + ')');
+  } finally {
+    btn.classList.remove('loading');
+  }
+}
+
+// ─────────────────────────────────────────────
+//  PRICE UI
+// ─────────────────────────────────────────────
+function fmt(n) { return n == null ? '—' : '$' + parseFloat(n).toFixed(2); }
+function fmtBDT(n) { return n == null ? '—' : '৳' + Math.round(parseFloat(n)).toLocaleString('en-IN'); }
+function fmtBDTd(n) { return n == null ? '—' : '৳' + parseFloat(n).toFixed(2); }
+
+function updatePriceUI(data, metal) {
+  const price = data.price; // USD per troy oz
+  const prev = data.prev_close_price;
+  const change = prev ? price - prev : 0;
+  const changePct = prev ? (change / prev * 100) : 0;
+
+  const perGramUSD = price / TROY_OZ_TO_GRAM;
+  const perTolaUSD = perGramUSD * TOLA;
+  const perGramBDT = perGramUSD * usdToBdt;
+  const perTolaBDT = perTolaUSD * usdToBdt;
+  const changeGramBDT = (change / TROY_OZ_TO_GRAM) * usdToBdt;
+
+  const priceEl = document.getElementById(metal + 'Price');
+  const changeEl = document.getElementById(metal + 'Change');
+  const gramEl = document.getElementById(metal + 'PerGram');
+  const tolaEl = document.getElementById(metal + 'PerTola');
+
+  // Main display: BDT per gram
+  priceEl.textContent = fmtBDT(perGramBDT);
+
+  const sign = changeGramBDT >= 0 ? '+' : '';
+  changeEl.textContent = `${sign}${fmtBDTd(changeGramBDT)} (${sign}${changePct.toFixed(2)}%)`;
+  changeEl.className = 'price-change ' + (change > 0 ? 'change-up' : change < 0 ? 'change-down' : 'change-flat');
+
+  gramEl.textContent = fmtBDT(perTolaBDT);   // per tola BDT
+  tolaEl.textContent = fmt(price);            // USD per oz (reference)
+}
+
+function updateMarketBar(gold, silver) {
+  const open = isGoldMarketOpen();
+  const statusEl = document.getElementById('mktStatus');
+  statusEl.textContent = open ? '🟢 খোলা' : '🔴 বন্ধ';
+  statusEl.className = 'value ' + (open ? 'market-open' : 'market-closed');
+
+  const toGram = v => v ? fmtBDT(v / TROY_OZ_TO_GRAM * usdToBdt) : '—';
+  document.getElementById('goldHigh').textContent = toGram(gold.high_price);
+  document.getElementById('goldLow').textContent = toGram(gold.low_price);
+  document.getElementById('silverHigh').textContent = toGram(silver.high_price);
+  document.getElementById('silverLow').textContent = toGram(silver.low_price);
+}
+
+// ─────────────────────────────────────────────
+//  HISTORY (localStorage)
+// ─────────────────────────────────────────────
+function getHistory(metal) {
+  try {
+    const raw = localStorage.getItem(HISTORY_KEY + '_' + metal);
+    return raw ? JSON.parse(raw) : [];
+  } catch { return []; }
+}
+
+function appendHistory(metal, price) {
+  let arr = getHistory(metal);
+  arr.push({ t: Date.now(), p: price });
+  if (arr.length > MAX_HISTORY) arr = arr.slice(-MAX_HISTORY);
+  localStorage.setItem(HISTORY_KEY + '_' + metal, JSON.stringify(arr));
+}
+
+// ─────────────────────────────────────────────
+//  CHART
+// ─────────────────────────────────────────────
+function updateChart(metal, history) {
+  const canvasId = metal + 'Chart';
+  const noDataId = metal + 'NoData';
+  const minId = metal + 'ChartMin';
+  const maxId = metal + 'ChartMax';
+
+  if (history.length < 2) {
+    document.getElementById(noDataId).classList.remove('hidden');
+    document.getElementById(canvasId).style.display = 'none';
+    return;
+  }
+  document.getElementById(noDataId).classList.add('hidden');
+  document.getElementById(canvasId).style.display = 'block';
+
+  const labels = history.map(h => {
+    const d = new Date(h.t);
+    return d.getHours().toString().padStart(2,'0') + ':' + d.getMinutes().toString().padStart(2,'0');
+  });
+  const prices = history.map(h => h.p);
+  const minP = Math.min(...prices);
+  const maxP = Math.max(...prices);
+
+  document.getElementById(minId).textContent = 'Min: ' + fmt(minP);
+  document.getElementById(maxId).textContent = 'Max: ' + fmt(maxP);
+
+  const color = metal === 'gold' ? '#F59E0B' : '#94A3B8';
+  const colorDim = metal === 'gold' ? 'rgba(245,158,11,0.15)' : 'rgba(148,163,184,0.15)';
+
+  const dataset = {
+    data: prices,
+    borderColor: color,
+    backgroundColor: colorDim,
+    fill: true,
+    tension: 0.4,
+    pointRadius: 3,
+    pointBackgroundColor: color,
+    borderWidth: 2,
+  };
+
+  const chartRef = metal === 'gold' ? goldChartInst : silverChartInst;
+
+  if (chartRef) {
+    chartRef.data.labels = labels;
+    chartRef.data.datasets[0] = dataset;
+    chartRef.update('none');
+  } else {
+    const ctx = document.getElementById(canvasId).getContext('2d');
+    const inst = new Chart(ctx, {
+      type: 'line',
+      data: { labels, datasets: [dataset] },
+      options: {
+        responsive: true, maintainAspectRatio: false,
+        animation: { duration: 400 },
+        plugins: { legend: { display: false }, tooltip: {
+          backgroundColor: '#161616',
+          borderColor: color,
+          borderWidth: 1,
+          titleColor: color,
+          bodyColor: '#94A3B8',
+          callbacks: {
+            label: ctx => ' $' + ctx.parsed.y.toFixed(2)
+          }
+        }},
+        scales: {
+          x: { grid: { color: 'rgba(255,255,255,0.04)' }, ticks: { color: '#64748B', font: { size: 10 }, maxTicksLimit: 6 }},
+          y: { grid: { color: 'rgba(255,255,255,0.04)' }, ticks: { color: '#64748B', font: { size: 10 }, callback: v => '$' + v.toFixed(0) }}
+        }
+      }
+    });
+    if (metal === 'gold') goldChartInst = inst;
+    else silverChartInst = inst;
+  }
+}
+
+// ─────────────────────────────────────────────
+//  PREDICTION ENGINE (SMA + ROC + RSI)
+// ─────────────────────────────────────────────
+function sma(arr, period) {
+  if (arr.length < period) return null;
+  const slice = arr.slice(-period);
+  return slice.reduce((a, b) => a + b, 0) / period;
+}
+
+function calcRSI(prices, period = 7) {
+  if (prices.length < period + 1) return null;
+  const slice = prices.slice(-(period + 1));
+  let gains = 0, losses = 0;
+  for (let i = 1; i < slice.length; i++) {
+    const diff = slice[i] - slice[i - 1];
+    if (diff > 0) gains += diff;
+    else losses += Math.abs(diff);
+  }
+  if (losses === 0) return 100;
+  const rs = gains / losses;
+  return 100 - (100 / (1 + rs));
+}
+
+function calcROC(prices) {
+  if (prices.length < 3) return null;
+  const last = prices[prices.length - 1];
+  const ref = prices[prices.length - 3];
+  return ((last - ref) / ref) * 100;
+}
+
+function runPrediction(history) {
+  const prices = history.map(h => h.p);
+  if (prices.length < 3) {
+    return { direction: 'neutral', confidence: 'low', reason: 'কমপক্ষে ৩টি ডেটা পয়েন্ট দরকার। সংগ্রহ চলছে।', rsi: null, smaSignal: '—', roc: null };
+  }
+
+  const rsi = calcRSI(prices);
+  const roc = calcROC(prices);
+  const sma3 = sma(prices, Math.min(3, prices.length));
+  const sma7 = sma(prices, Math.min(7, prices.length));
+  const lastPrice = prices[prices.length - 1];
+
+  let bullPoints = 0, bearPoints = 0;
+  let reasons = [];
+  let smaSignal = '—';
+
+  // RSI
+  if (rsi !== null) {
+    if (rsi < 30) { bullPoints += 2; reasons.push('RSI oversold (' + rsi.toFixed(1) + ') — bounce likely'); }
+    else if (rsi > 70) { bearPoints += 2; reasons.push('RSI overbought (' + rsi.toFixed(1) + ') — pullback likely'); }
+    else if (rsi > 50) { bullPoints += 1; reasons.push('RSI bullish zone (' + rsi.toFixed(1) + ')'); }
+    else { bearPoints += 1; reasons.push('RSI bearish zone (' + rsi.toFixed(1) + ')'); }
+  }
+
+  // SMA
+  if (sma3 && sma7) {
+    if (sma3 > sma7) { bullPoints += 2; smaSignal = 'Bullish (SMA3 > SMA7)'; reasons.push('Short-term MA above long-term MA'); }
+    else if (sma3 < sma7) { bearPoints += 2; smaSignal = 'Bearish (SMA3 < SMA7)'; reasons.push('Short-term MA below long-term MA'); }
+    else { smaSignal = 'Neutral'; }
+  } else if (sma3) {
+    if (lastPrice > sma3) { bullPoints += 1; smaSignal = 'Above SMA3'; }
+    else { bearPoints += 1; smaSignal = 'Below SMA3'; }
+  }
+
+  // ROC
+  if (roc !== null) {
+    if (roc > 0.3) { bullPoints += 2; reasons.push('Strong positive momentum (' + roc.toFixed(2) + '%)'); }
+    else if (roc > 0) { bullPoints += 1; reasons.push('Positive momentum (' + roc.toFixed(2) + '%)'); }
+    else if (roc < -0.3) { bearPoints += 2; reasons.push('Strong negative momentum (' + roc.toFixed(2) + '%)'); }
+    else { bearPoints += 1; reasons.push('Negative momentum (' + roc.toFixed(2) + '%)'); }
+  }
+
+  const total = bullPoints + bearPoints;
+  const ratio = total > 0 ? Math.max(bullPoints, bearPoints) / total : 0;
+  let confidence = 'low';
+  if (ratio >= 0.80) confidence = 'high';
+  else if (ratio >= 0.60) confidence = 'medium';
+
+  let direction = bullPoints > bearPoints ? 'up' : bearPoints > bullPoints ? 'down' : 'neutral';
+
+  const reason = reasons.length > 0 ? reasons.join(' · ') : 'Mixed signals.';
+
+  return { direction, confidence, reason, rsi, smaSignal, roc };
+}
+
+// ─────────────────────────────────────────────
+//  PREDICTION UI
+// ─────────────────────────────────────────────
+function updatePredictionUI(metal, pred) {
+  const dirEl = document.getElementById(metal + 'PredDir');
+  const reasonEl = document.getElementById(metal + 'PredReason');
+  const rsiEl = document.getElementById(metal + 'RSI');
+  const rsiBar = document.getElementById(metal + 'RSIBar');
+  const smaEl = document.getElementById(metal + 'SMA');
+  const rocEl = document.getElementById(metal + 'ROC');
+
+  if (pred.direction === 'up') {
+    dirEl.textContent = '📈 PRICE LIKELY TO GO UP';
+    dirEl.className = 'pred-direction pred-up';
+  } else if (pred.direction === 'down') {
+    dirEl.textContent = '📉 PRICE LIKELY TO GO DOWN';
+    dirEl.className = 'pred-direction pred-down';
+  } else {
+    dirEl.textContent = '➡️ NEUTRAL / MIXED SIGNALS';
+    dirEl.className = 'pred-direction pred-neutral';
+  }
+
+  reasonEl.textContent = pred.reason;
+
+  if (pred.rsi !== null) {
+    rsiEl.textContent = pred.rsi.toFixed(1);
+    rsiEl.style.color = pred.rsi < 30 ? 'var(--green)' : pred.rsi > 70 ? 'var(--red)' : 'var(--text)';
+    rsiBar.style.width = pred.rsi.toFixed(0) + '%';
+    rsiBar.style.background = pred.rsi < 30 ? 'var(--green)' : pred.rsi > 70 ? 'var(--red)' : (metal === 'gold' ? 'var(--gold)' : 'var(--silver)');
+  } else {
+    rsiEl.textContent = '— (ডেটা কম)';
+  }
+  smaEl.textContent = pred.smaSignal;
+  rocEl.textContent = pred.roc !== null ? pred.roc.toFixed(3) + '%' : '— (ডেটা কম)';
+  rocEl.style.color = pred.roc > 0 ? 'var(--green)' : pred.roc < 0 ? 'var(--red)' : 'var(--muted)';
+}
+
+// ─────────────────────────────────────────────
+//  SIGNAL CARD
+// ─────────────────────────────────────────────
+function updateSignalCard(metal, pred) {
+  const card = document.getElementById(metal + 'SignalCard');
+  const icon = document.getElementById(metal + 'SignalIcon');
+  const word = document.getElementById(metal + 'SignalWord');
+  const conf = document.getElementById(metal + 'ConfBadge');
+
+  const isBuy = pred.direction === 'up' && (pred.confidence === 'medium' || pred.confidence === 'high');
+  const isSell = pred.direction === 'down' && (pred.confidence === 'medium' || pred.confidence === 'high');
+
+  if (isBuy) {
+    card.className = 'signal-card buy';
+    icon.textContent = '🟢';
+    word.textContent = 'BUY';
+  } else if (isSell) {
+    card.className = 'signal-card sell';
+    icon.textContent = '🔴';
+    word.textContent = 'SELL';
+  } else {
+    card.className = 'signal-card hold';
+    icon.textContent = '🟡';
+    word.textContent = 'HOLD';
+  }
+
+  const confLabels = { high: 'HIGH CONFIDENCE', medium: 'MEDIUM CONFIDENCE', low: 'LOW CONFIDENCE' };
+  const confClasses = { high: 'signal-conf conf-high', medium: 'signal-conf conf-med', low: 'signal-conf conf-low' };
+  conf.textContent = confLabels[pred.confidence];
+  conf.className = confClasses[pred.confidence];
+}
+
+// ─────────────────────────────────────────────
+//  COUNTDOWN
+// ─────────────────────────────────────────────
+function startCountdown() {
+  if (countdownTimer) clearInterval(countdownTimer);
+  countdown = REFRESH_SECS;
+  updateCountdownUI();
+  countdownTimer = setInterval(() => {
+    countdown--;
+    updateCountdownUI();
+    if (countdown <= 0) {
+      countdown = REFRESH_SECS;
+      fetchAllPrices();
+    }
+  }, 1000);
+}
+
+function updateCountdownUI() {
+  document.getElementById('countdownNum').textContent = countdown;
+  const circumference = 88;
+  const offset = circumference - (countdown / REFRESH_SECS) * circumference;
+  document.getElementById('countdownRing').style.strokeDashoffset = offset;
+}
+
+// ─────────────────────────────────────────────
+//  ERROR
+// ─────────────────────────────────────────────
+function showError(msg) {
+  document.getElementById('errorBanner').classList.remove('hidden');
+  document.getElementById('errorMsg').textContent = msg;
+}
+function hideError() {
+  document.getElementById('errorBanner').classList.add('hidden');
+}
+</script>
+</body>
+</html>
