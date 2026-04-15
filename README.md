@@ -17,7 +17,7 @@
 
 ---
 
-## 📌 What is GoldTrack Pro?
+##  What is GoldTrack Pro?
 
 GoldTrack Pro is a free, open-source web dashboard designed specifically for gold and silver traders in Bangladesh. International precious metal prices change every minute. Buying or selling at the right moment is the difference between profit and loss.
 
