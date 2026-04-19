@@ -27,7 +27,7 @@ This software helps you decide:
 - 🔴 **When to SELL** — when the market signals a downward movement
 - 🟡 **When to HOLD** — when signals are mixed or confidence is low
 
-All prices are displayed in **BDT (Bangladeshi Taka)** per gram and per tola, making it directly usable for local trading decisions..................
+All prices are displayed in **BDT (Bangladeshi Taka)** per gram and per tola, making it directly usable for local trading decisions...................
 
 ---
 
