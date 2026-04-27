@@ -7,7 +7,7 @@
 [![No Install Required](https://img.shields.io/badge/No%20Install-Required-10B981?style=flat-square)](#)
 [![Mobile Friendly](https://img.shields.io/badge/Mobile-Friendly-3B82F6?style=flat-square)](#getting-started)
 [![Free API](https://img.shields.io/badge/API-Free%20Tier-F59E0B?style=flat-square)](https://goldapi.io)
-[![License: MIT](https://img.shields.io/badge/License-MIT-94A3B8?style=flat-square)](LICENSE)
+
 
 **A Real-Time Gold & Silver Price Tracker with AI-Powered Buy/Sell Signals — built for traders in Bangladesh.**
 
