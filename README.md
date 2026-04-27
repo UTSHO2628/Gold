@@ -2,7 +2,7 @@
 
 <div align="center">
 
-
+![GoldTrack Pro](https://img.shields.io/badge/GoldTrack-Pro-F59E0B?style=for-the-badge&labelColor=0f0f0f)
 [![Made for Bangladesh](https://img.shields.io/badge/Made%20for-Bangladesh%20🇧🇩-006A4E?style=flat-square)](https://github.com)
 [![No Install Required](https://img.shields.io/badge/No%20Install-Required-10B981?style=flat-square)](#)
 [![Mobile Friendly](https://img.shields.io/badge/Mobile-Friendly-3B82F6?style=flat-square)](#getting-started)
