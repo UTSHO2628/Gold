@@ -49,7 +49,7 @@ All prices are displayed in **BDT (Bangladeshi Taka)** per gram and per tola, ma
 
 ---
 
-## 🖥️ Preview
+
 
 ```
 ┌──────────────────────────────────────────────────────────┐
